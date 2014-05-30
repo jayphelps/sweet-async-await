@@ -29,12 +29,11 @@ macro async {
             });
         }
       }
-      
       let (var) = macro {
-        rule { $identifier:ident = await $expression:expr ; $after $[...] } => {
+        rule { $identifier:ident = await $expression:expr $after $[...] } => {
           var $identifier;
           return $expression.then(function (value) {
-            $identifier = value;
+            $identifier = value
             $after $[...]
           })
         }
@@ -43,9 +42,9 @@ macro async {
       }
       
       let (=) = macro {
-        rule infix { $identifier | await $expression:expr ; $after $[...] } => {
+        rule infix { $identifier | await $expression:expr $after $[...] } => {
           return $expression.then(function (value) {
-            $identifier = value;
+            $identifier = value
             $after $[...]
           })
         }
