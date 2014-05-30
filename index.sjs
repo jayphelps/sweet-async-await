@@ -29,6 +29,7 @@ macro async {
             });
         }
       }
+      
       let (var) = macro {
         rule { $identifier:ident = await $expression:expr ; $after $[...] } => {
           var $identifier;
