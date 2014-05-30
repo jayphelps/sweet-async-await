@@ -33,7 +33,16 @@ macro async {
         rule infix { $left:expr | $right:expr } => { $left = $right }
       }
       
-      macro try {
+      macro try {        
+        rule { $tryBody catch $catchParams $catchBody finally $finallyBody } => {
+          return new Promise(function (resolve) {
+            resolve(this);
+          })
+          .then(function () $tryBody)
+          .catch(function $catchParams $catchBody)
+          .finally(function () $finallyBody);
+        }
+      
         rule { $tryBody catch $catchParams $catchBody } => {
           return new Promise(function (resolve) {
             resolve(this);
