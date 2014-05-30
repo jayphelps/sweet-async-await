@@ -1,7 +1,10 @@
 macro async {
-  rule {
-    function $name:ident $params { $body ... }
-  } => {    
+  case {
+    $_ function $name:ident $params { $body ... }
+  } => {
+    letstx $ctx = [makeIdent('ctx', #{$_})];
+
+    return #{
       macro await {
         rule { $expression:expr ; $after $[...] } => {
             return $expression.then(function () {
@@ -27,17 +30,21 @@ macro async {
           })
         }
         
-        rule infix { $left | $right } => { $left = $right }
+        rule infix { $left:expr | $right:expr } => { $left = $right }
       }
 
       function $name $params {
-        var _this = this;
-        
+        var $ctx = this;
+        let (this) = macro {
+          rule {} => { $ctx }
+        }
+
         return new Promise(function (resolve) {
           resolve(this);
         }).then(function () {
           $body ...
         });
       }
+    };
   }
 }
