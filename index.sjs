@@ -5,6 +5,23 @@ macro async {
     letstx $ctx = [makeIdent('ctx', #{$_})];
 
     return #{
+      macro try {        
+        rule { $tryBody catch $catchParams $catchBody finally $finallyBody } => {
+          return new Promise(function (resolve) {
+            resolve(this);
+          })
+          .then(function () $tryBody)
+          .catch(function $catchParams $catchBody)
+          .finally(function () $finallyBody);
+        }
+      
+        rule { $tryBody catch $catchParams $catchBody } => {
+          return new Promise(function (resolve) {
+            resolve(this);
+          }).then(function () $tryBody).catch(function $catchParams $catchBody);
+        }
+      }
+
       macro await {
         rule { $expression:expr ; $after $[...] } => {
             return $expression.then(function () {
@@ -14,7 +31,9 @@ macro async {
       }
       let (var) = macro {
         rule { $identifier:ident = await $expression:expr ; $after $[...] } => {
-          return $expression.then(function ($identifier) {
+          var $identifier;
+          return $expression.then(function (value) {
+            $identifier = value;
             $after $[...]
           })
         }
@@ -31,23 +50,6 @@ macro async {
         }
         
         rule infix { $left:expr | $right:expr } => { $left = $right }
-      }
-      
-      macro try {        
-        rule { $tryBody catch $catchParams $catchBody finally $finallyBody } => {
-          return new Promise(function (resolve) {
-            resolve(this);
-          })
-          .then(function () $tryBody)
-          .catch(function $catchParams $catchBody)
-          .finally(function () $finallyBody);
-        }
-      
-        rule { $tryBody catch $catchParams $catchBody } => {
-          return new Promise(function (resolve) {
-            resolve(this);
-          }).then(function () $tryBody).catch(function $catchParams $catchBody);
-        }
       }
 
       function $name $params {
