@@ -31,9 +31,11 @@ macro async {
       }
 
       function $name $params {
+        var _this = this;
+        
         return new Promise(function (resolve) {
           resolve(this);
-        }.bind(this)).then(function () {
+        }).then(function () {
           $body ...
         });
       }
