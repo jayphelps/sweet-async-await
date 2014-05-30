@@ -1,0 +1,67 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>Sweet-async-await by jayphelps</title>
+
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="wrapper">
+      <header>
+        <h1>Sweet-async-await</h1>
+        <p>Sweet.js macros to support the async/await ES7 proposed feature</p>
+
+        <p class="view"><a href="https://github.com/jayphelps/sweet-async-await">View the Project on GitHub <small>jayphelps/sweet-async-await</small></a></p>
+
+
+        <ul>
+          <li><a href="https://github.com/jayphelps/sweet-async-await/zipball/master">Download <strong>ZIP File</strong></a></li>
+          <li><a href="https://github.com/jayphelps/sweet-async-await/tarball/master">Download <strong>TAR Ball</strong></a></li>
+          <li><a href="https://github.com/jayphelps/sweet-async-await">View On <strong>GitHub</strong></a></li>
+        </ul>
+      </header>
+      <section>
+        <h1>
+<a name="sweet-async-await" class="anchor" href="#sweet-async-await"><span class="octicon octicon-link"></span></a>sweet-async-await</h1>
+
+<p>Sweet.js macros to support the async/await ES7 proposed feature</p>
+
+<p><a href="https://github.com/lukehoban/ecmascript-asyncawait">https://github.com/lukehoban/ecmascript-asyncawait</a></p>
+
+<div class="highlight highlight-javascript"><pre><span class="nx">async</span> <span class="kd">function</span> <span class="nx">findPosts</span><span class="p">()</span> <span class="p">{</span>
+  <span class="k">return</span> <span class="nx">$</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s1">'/posts'</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="nx">async</span> <span class="kd">function</span> <span class="nx">main</span><span class="p">()</span> <span class="p">{</span>
+  <span class="kd">var</span> <span class="nx">posts</span> <span class="o">=</span> <span class="nx">await</span> <span class="nx">findPosts</span><span class="p">();</span>
+
+  <span class="nx">posts</span><span class="p">.</span><span class="nx">forEach</span><span class="p">(</span><span class="kd">function</span> <span class="p">(</span><span class="nx">post</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">post</span><span class="p">);</span>
+  <span class="p">});</span>
+<span class="p">}</span>
+
+<span class="nx">main</span><span class="p">();</span>
+
+</pre></div>
+
+<h4>
+<a name="goals" class="anchor" href="#goals"><span class="octicon octicon-link"></span></a>Goals</h4>
+
+<p>The primary end-goal is to output the same human readable code you would use if this didn't exist, instead of using a state machine like the <a href="https://github.com/google/traceur-compiler">traceur-compiler</a> does.</p>
+      </section>
+      <footer>
+        <p>This project is maintained by <a href="https://github.com/jayphelps">jayphelps</a></p>
+        <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></small></p>
+      </footer>
+    </div>
+    <script src="javascripts/scale.fix.js"></script>
+    
+  </body>
+</html>
