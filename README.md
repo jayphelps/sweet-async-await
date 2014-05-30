@@ -21,3 +21,6 @@ async function main() {
 main();
 
 ```
+
+#### Goals
+The primary end-goal is to output the same human readable code you would use if this didn't exist, instead of using a state machine like the [traceur-compiler](https://github.com/google/traceur-compiler) does.
