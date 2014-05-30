@@ -7,18 +7,15 @@ macro async {
     return #{
       macro try {        
         rule { $tryBody catch $catchParams $catchBody finally $finallyBody } => {
-          return new Promise(function (resolve) {
-            resolve(this);
-          })
+          return Promise.cast()
           .then(function () $tryBody)
           .catch(function $catchParams $catchBody)
           .finally(function () $finallyBody);
         }
       
         rule { $tryBody catch $catchParams $catchBody } => {
-          return new Promise(function (resolve) {
-            resolve(this);
-          }).then(function () $tryBody).catch(function $catchParams $catchBody);
+          return Promise.cast()
+            .then(function () $tryBody).catch(function $catchParams $catchBody);
         }
       }
 
@@ -58,12 +55,11 @@ macro async {
         let (this) = macro {
           rule {} => { $ctx }
         }
-
-        return new Promise(function (resolve) {
-          resolve(this);
-        }).then(function () {
-          $body ...
-        });
+        
+        return Promise.cast()
+          .then(function () {            
+            $body ...
+          });
       }
     };
   }
