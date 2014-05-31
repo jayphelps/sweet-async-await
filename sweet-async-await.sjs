@@ -70,3 +70,5 @@ macro async {
     };
   }
 }
+
+export async;
