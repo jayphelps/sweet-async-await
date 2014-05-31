@@ -5,52 +5,52 @@ macro async {
     letstx $ctx = [makeIdent('ctx', #{$_})];
 
     return #{
-      macro try {        
-        rule { $tryBody catch $catchParams $catchBody finally $finallyBody } => {
-          return Promise.cast()
-          .then(function () $tryBody)
-          .catch(function $catchParams $catchBody)
-          .finally(function () $finallyBody);
-        }
-      
-        rule { $tryBody catch $catchParams $catchBody } => {
-          return Promise.cast()
-            .then(function () $tryBody).catch(function $catchParams $catchBody);
-        }
-      }
-
-      macro await {
-        rule { $expression:expr ; $after $[...] } => {
-            return $expression.then(function () {
-              $after $[...]
-            });
-        }
-      }
-      
-      let (var) = macro {
-        rule { $identifier:ident = await $expression:expr $after $[...] } => {
-          var $identifier;
-          return $expression.then(function (value) {
-            $identifier = value
-            $after $[...]
-          })
+      function $name $params {
+        macro try {        
+          rule { $tryBody catch $catchParams $catchBody finally $finallyBody } => {
+            return Promise.cast()
+            .then(function () $tryBody)
+            .catch(function $catchParams $catchBody)
+            .finally(function () $finallyBody);
+          }
+        
+          rule { $tryBody catch $catchParams $catchBody } => {
+            return Promise.cast()
+              .then(function () $tryBody).catch(function $catchParams $catchBody);
+          }
         }
 
-        rule { $id } => { var $id }
-      }
-      
-      let (=) = macro {
-        rule infix { $identifier | await $expression:expr $after $[...] } => {
-          return $expression.then(function (value) {
-            $identifier = value
-            $after $[...]
-          })
+        macro await {
+          rule { $expression:expr ; $after $[...] } => {
+              return $expression.then(function () {
+                $after $[...]
+              });
+          }
         }
         
-        rule infix { $left:expr | $right:expr } => { $left = $right }
-      }
+        let (var) = macro {
+          rule { $identifier:ident = await $expression:expr $after $[...] } => {
+            var $identifier;
+            return $expression.then(function (value) {
+              $identifier = value
+              $after $[...]
+            })
+          }
 
-      function $name $params {
+          rule { $id } => { var $id }
+        }
+        
+        let (=) = macro {
+          rule infix { $identifier | await $expression:expr $after $[...] } => {
+            return $expression.then(function (value) {
+              $identifier = value
+              $after $[...]
+            })
+          }
+          
+          rule infix { $left:expr | $right:expr } => { $left = $right }
+        }
+        
         var $ctx = this;
         let (this) = macro {
           rule {} => { $ctx }
