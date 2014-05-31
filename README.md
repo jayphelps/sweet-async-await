@@ -37,12 +37,15 @@ function main() {
   var ctx = this, args = arguments;
   return Promise.cast().then(function () {
     console.log('starting...');
+    
     var posts;
     return findPosts().then(function (value) {
       posts = value;
+      
       posts.forEach(function (post) {
         console.log(post);
       });
+      
       console.log('ending...');
     });
   });
