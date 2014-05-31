@@ -3,6 +3,7 @@ macro async {
     $_ function $name:ident $params { $body ... }
   } => {
     letstx $ctx = [makeIdent('ctx', #{$_})];
+    letstx $args = [makeIdent('args', #{$_})];
 
     return #{
       function $name $params {
@@ -51,9 +52,14 @@ macro async {
           rule infix { $left:expr | $right:expr } => { $left = $right }
         }
         
-        var $ctx = this;
+        var $ctx = this, $args = arguments;
+        
         let (this) = macro {
           rule {} => { $ctx }
+        }
+        
+        let (arguments) = macro {
+          rule {} => { $args }
         }
         
         return Promise.cast()
