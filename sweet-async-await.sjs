@@ -10,9 +10,9 @@ macro async {
         macro try {        
           rule { $tryBody catch $catchParams $catchBody finally $finallyBody } => {
             return Promise.cast()
-            .then(function () $tryBody)
-            .catch(function $catchParams $catchBody)
-            .finally(function () $finallyBody);
+              .then(function () $tryBody)
+              .catch(function $catchParams $catchBody)
+              .finally(function () $finallyBody);
           }
         
           rule { $tryBody catch $catchParams $catchBody } => {
@@ -23,9 +23,9 @@ macro async {
 
         macro await {
           rule { $expression:expr ; $after $[...] } => {
-              return $expression.then(function () {
-                $after $[...]
-              });
+            return $expression.then(function () {
+              $after $[...]
+            });
           }
         }
         
