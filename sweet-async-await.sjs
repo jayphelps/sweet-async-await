@@ -42,9 +42,9 @@ macro async {
         }
         
         let (=) = macro {
-          rule infix { $identifier | await $expression:expr $after $[...] } => {
-            return $expression.then(function (value) {
-              $identifier = value
+          rule infix { $leftExpr:expr | await $rightExpr:expr $after $[...] } => {
+            return $rightExpr.then(function (value) {
+              $leftExpr = value
               $after $[...]
             })
           }
