@@ -12,6 +12,7 @@ async function findPosts() {
 
 async function main() {
   console.log('starting...');
+  
   var posts = await findPosts();
 
   posts.forEach(function (post) {
