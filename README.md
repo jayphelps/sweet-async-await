@@ -7,7 +7,8 @@ sweet-async-await
 ##### Input
 ```javascript
 async function findPosts() {
-  return $.get('/posts');
+  var response = await $.get('/posts');
+  return JSON.parse(response.posts);
 }
 
 async function main() {
@@ -27,10 +28,14 @@ main();
 ##### Output
 ```javascript
 function findPosts() {
-  var ctx = this, args = arguments;
-  return Promise.cast().then(function () {
-    return $.get('/posts');
-  });
+    var ctx = this, args = arguments;
+    return Promise.cast().then(function () {
+        var response;
+        return $.get('/posts').then(function (value) {
+            response = value;
+            return JSON.parse(response.posts);
+        });
+    });
 }
 
 function main() {
