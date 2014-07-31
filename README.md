@@ -3,6 +3,7 @@ sweet-async-await
 
 [Sweet.js](http://sweetjs.org/) macros to support the async/await [ES7 proposed feature](https://github.com/lukehoban/ecmascript-asyncawait) for handling JavaScript [Promises](https://www.promisejs.org/)
 
+***Probably incomplete and broken. Consider this an experiment at this point***
 
 ##### Input
 ```javascript
