@@ -9,14 +9,14 @@ macro async {
       function $name $params {
         macro try {        
           rule { $tryBody catch $catchParams $catchBody finally $finallyBody } => {
-            return Promise.cast()
+            return Promise.resolve()
               .then(function () $tryBody)
               .catch(function $catchParams $catchBody)
               .finally(function () $finallyBody);
           }
         
           rule { $tryBody catch $catchParams $catchBody } => {
-            return Promise.cast()
+            return Promise.resolve()
               .then(function () $tryBody).catch(function $catchParams $catchBody);
           }
         }
@@ -62,7 +62,7 @@ macro async {
           rule {} => { $args }
         }
         
-        return Promise.cast()
+        return Promise.resolve()
           .then(function () {            
             $body ...
           });
