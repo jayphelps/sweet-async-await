@@ -29,7 +29,7 @@ main();
 ```javascript
 function findPosts() {
     var ctx = this, args = arguments;
-    return Promise.cast().then(function () {
+    return Promise.resolve().then(function () {
         var response;
         return $.get('/posts').then(function (value) {
             response = value;
@@ -40,7 +40,7 @@ function findPosts() {
 
 function main() {
   var ctx = this, args = arguments;
-  return Promise.cast().then(function () {
+  return Promise.resolve().then(function () {
     console.log('starting...');
     
     var posts;
