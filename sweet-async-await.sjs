@@ -16,16 +16,23 @@ macro async {
         }
 
         let (try) = macro {        
-          rule { $tryBody catch $catchParams $catchBody finally $finallyBody } => {
+          rule { $tryBody catch $catchParams $catchBody finally $finallyBody $after $[...] } => {
             return Promise.resolve()
               .then(function () $tryBody)
               .catch(function $catchParams $catchBody)
-              .finally(function () $finallyBody);
+              .finally(function () $finallyBody)
+              .then(function () {
+                $after $[...]
+              });
           }
         
-          rule { $tryBody catch $catchParams $catchBody } => {
+          rule { $tryBody catch $catchParams $catchBody $after $[...] } => {
             return Promise.resolve()
-              .then(function () $tryBody).catch(function $catchParams $catchBody);
+              .then(function () $tryBody)
+              .catch(function $catchParams $catchBody)
+              .then(function () {
+                $after $[...]
+              });
           }
         }
         
