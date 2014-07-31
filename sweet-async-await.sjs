@@ -7,7 +7,15 @@ macro async {
 
     return #{
       function $name $params {
-        macro try {        
+        macro await {
+          rule { $expression:expr ; $after $[...] } => {
+            return $expression.then(function () {
+              $after $[...]
+            });
+          }
+        }
+
+        let (try) = macro {        
           rule { $tryBody catch $catchParams $catchBody finally $finallyBody } => {
             return Promise.resolve()
               .then(function () $tryBody)
@@ -18,14 +26,6 @@ macro async {
           rule { $tryBody catch $catchParams $catchBody } => {
             return Promise.resolve()
               .then(function () $tryBody).catch(function $catchParams $catchBody);
-          }
-        }
-
-        macro await {
-          rule { $expression:expr ; $after $[...] } => {
-            return $expression.then(function () {
-              $after $[...]
-            });
           }
         }
         
